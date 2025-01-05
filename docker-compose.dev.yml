@@ -1,0 +1,36 @@
+services:
+  database:
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: finmon
+    networks:
+      - finmon-network
+    volumes:
+      - finmon-volume:/var/lib/postgresql/data
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    networks:
+      - finmon-network
+    develop:
+      watch:
+        - action: sync+restart
+          path: .
+          target: /opt/
+
+networks:
+  finmon-network:
+    name: finmon-network
+volumes:
+  finmon-volume:
