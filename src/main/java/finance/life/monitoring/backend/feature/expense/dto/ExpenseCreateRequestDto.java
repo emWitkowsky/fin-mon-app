@@ -2,7 +2,7 @@ package finance.life.monitoring.backend.feature.expense.dto;
 
 import java.time.LocalDateTime;
 
-public record CreateExpenseRequestDto (
+public record ExpenseCreateRequestDto(
     String title,
     String summary,
     LocalDateTime transactionDate,

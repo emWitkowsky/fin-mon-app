@@ -1,6 +1,6 @@
 package finance.life.monitoring.backend.feature.expense.controller;
 
-import finance.life.monitoring.backend.feature.expense.dto.CreateExpenseRequestDto;
+import finance.life.monitoring.backend.feature.expense.dto.ExpenseCreateRequestDto;
 import finance.life.monitoring.backend.feature.expense.model.Expense;
 import finance.life.monitoring.backend.feature.expense.service.ExpenseService;
 import jakarta.transaction.Transactional;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,7 +64,7 @@ public class ExpenseController {
             @RequestParam LocalDateTime bookDate,
             @RequestParam String description
             ) {
-        CreateExpenseRequestDto createExpenseRequestDto = new CreateExpenseRequestDto(
+        ExpenseCreateRequestDto createExpenseRequestDto = new ExpenseCreateRequestDto(
                 title,
                 summary,
                 transactionDate,
@@ -71,5 +72,25 @@ public class ExpenseController {
                 description
         );
         return expenseService.createExpense(createExpenseRequestDto);
+    }
+
+    @Transactional
+    @PutMapping("/{id}")
+    public ResponseEntity<Expense>  updateExpenseById(
+            @RequestParam String title,
+            @RequestParam String summary,
+            @RequestParam LocalDateTime transactionDate,
+            @RequestParam LocalDateTime bookDate,
+            @RequestParam String description,
+            @PathVariable("id") UUID id
+    ) {
+        ExpenseCreateRequestDto createExpenseRequestDto = new ExpenseCreateRequestDto(
+                title,
+                summary,
+                transactionDate,
+                bookDate,
+                description
+        );
+        return expenseService.updateExpense(createExpenseRequestDto, id);
     }
 }

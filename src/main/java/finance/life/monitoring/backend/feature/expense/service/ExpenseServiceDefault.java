@@ -1,6 +1,6 @@
 package finance.life.monitoring.backend.feature.expense.service;
 
-import finance.life.monitoring.backend.feature.expense.dto.CreateExpenseRequestDto;
+import finance.life.monitoring.backend.feature.expense.dto.ExpenseCreateRequestDto;
 import finance.life.monitoring.backend.feature.expense.model.Expense;
 import finance.life.monitoring.backend.feature.expense.repository.ExpenseRepository;
 import jakarta.transaction.Transactional;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,7 +24,7 @@ public class ExpenseServiceDefault implements ExpenseService {
 
     @Override
     @Transactional
-    public ResponseEntity<Expense> createExpense(CreateExpenseRequestDto createExpenseRequestDto) {
+    public ResponseEntity<Expense> createExpense(ExpenseCreateRequestDto createExpenseRequestDto) {
         Expense expense;
         Expense.ExpenseBuilder expenseBuilder =
                 Expense.builder()
@@ -68,8 +67,18 @@ public class ExpenseServiceDefault implements ExpenseService {
     }
 
     @Override
-    public ResponseEntity<Expense> updateExpense(UUID id) {
-        return null;
+    public ResponseEntity<Expense> updateExpense(ExpenseCreateRequestDto expenseCreateRequestDto, UUID id) {
+        Expense expense = getExpenseOrThrow(id);
+
+        expense.setTitle(expenseCreateRequestDto.title());
+        expense.setSummary(expenseCreateRequestDto.summary());
+        expense.setTransactionDate(expenseCreateRequestDto.transactionDate());
+        expense.setBookDate(expenseCreateRequestDto.bookDate());
+        expense.setDescription(expenseCreateRequestDto.description());
+
+        expenseRepository.saveAndFlush(expense);
+
+        return ResponseEntity.ok().body(expense);
     }
 
     private Expense getExpenseOrThrow(UUID id) {
