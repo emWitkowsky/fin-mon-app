@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile.dev
     restart: always
     ports:
-      - "8080:8080"
+      - "8081:8081"
     depends_on:
       - database
     networks:
@@ -34,3 +34,4 @@ networks:
     name: finmon-network
 volumes:
   finmon-volume:
+
