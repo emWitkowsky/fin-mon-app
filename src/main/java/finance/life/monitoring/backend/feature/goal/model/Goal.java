@@ -1,4 +1,4 @@
-package finance.life.monitoring.backend.feature.subscription.model;
+package finance.life.monitoring.backend.feature.goal.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -20,24 +21,26 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Setter
-public class Subscription {
+@Getter
+public class Goal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @NotBlank
+    @Size(min = 1, max = 200)
+    private String title;
+
+    private BigDecimal totalAmount;
+
+    private BigDecimal currentAmount;
+
     @Size(max = 200)
     @NotBlank
-    private String name;
-
-    @NotBlank
-    private Float amount;
+    private String description;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime startDate;
-
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime endDate;
+    private LocalDateTime goalDate;
 }

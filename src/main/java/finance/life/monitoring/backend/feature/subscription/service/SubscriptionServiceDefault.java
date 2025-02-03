@@ -62,7 +62,11 @@ public class SubscriptionServiceDefault implements SubscriptionService {
 
     @Override
     public Optional<Float> getTotalOfSubscriptions() {
-        Optional<Float> totalAmount = subscriptionRepository.getTotalOfSubscriptions();
-        return totalAmount;
+        return subscriptionRepository.getTotalOfSubscriptions();
+    }
+
+    @Override
+    public void deleteSubscription(UUID uuid) {
+        subscriptionRepository.deleteById(uuid);
     }
 }

@@ -1,4 +1,4 @@
-package finance.life.monitoring.backend.feature.subscription.model;
+package finance.life.monitoring.backend.feature.plannedTransaction.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,22 +22,25 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Subscription {
-
+public class PlannedTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Size(max = 200)
     @NotBlank
-    private String name;
+    private String title;
 
-    @NotBlank
+    private TransactionType type;
+
+//    @NotBlank
     private Float amount;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime startDate;
+    @Size(max = 200)
+    @NotBlank
+    private String description;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime endDate;
+    private LocalDateTime date;
+
 }

@@ -17,4 +17,6 @@ public interface SubscriptionService {
     ResponseEntity<Subscription> createSubscription(SubscriptionCreateRequestDto subscriptionCreateRequestDto);
 
     Optional<Float> getTotalOfSubscriptions();
+
+    void deleteSubscription(UUID uuid);
 }
