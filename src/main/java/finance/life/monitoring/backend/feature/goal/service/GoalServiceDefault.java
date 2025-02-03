@@ -1,5 +1,7 @@
 package finance.life.monitoring.backend.feature.goal.service;
 
+import finance.life.monitoring.backend.core.handler.exception.BusinessException;
+import finance.life.monitoring.backend.core.handler.exception.BusinessExceptionReason;
 import finance.life.monitoring.backend.feature.goal.dto.GoalCreateRequestDto;
 import finance.life.monitoring.backend.feature.goal.model.Goal;
 import finance.life.monitoring.backend.feature.goal.repository.GoalRepository;
@@ -11,6 +13,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -73,4 +77,24 @@ public class GoalServiceDefault implements GoalService {
 
         return goalRepository.addAmountToGoal(goal.getId(), amount);
     }
+
+    @Override
+    public ResponseEntity<Goal> updateGoal(UUID uuid, GoalCreateRequestDto goalCreateRequestDto) {
+        Goal goal = getGoalOrThrow(uuid);
+        goal.setTitle(goalCreateRequestDto.title());
+        goal.setTotalAmount(goalCreateRequestDto.totalAmount());
+        goal.setCurrentAmount(goalCreateRequestDto.currentAmount());
+        goal.setDescription(goalCreateRequestDto.description());
+        goal.setGoalDate(goalCreateRequestDto.goalDate());
+
+        Goal savedGoal = goalRepository.saveAndFlush(goal);
+        return ResponseEntity.ok(savedGoal);
+    }
+
+    private Goal getGoalOrThrow(UUID uuid) {
+        Optional<Goal> goalOrNull = goalRepository.getGoalById(uuid);
+        return goalOrNull.orElseThrow(
+                () -> new BusinessException(BusinessExceptionReason.GOAL_NOT_FOUND));
+    }
+
 }

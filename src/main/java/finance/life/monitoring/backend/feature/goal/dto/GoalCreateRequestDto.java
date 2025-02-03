@@ -1,6 +1,7 @@
 package finance.life.monitoring.backend.feature.goal.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record GoalCreateRequestDto(
@@ -8,6 +9,6 @@ public record GoalCreateRequestDto(
         BigDecimal totalAmount,
         BigDecimal currentAmount,
         String description,
-        LocalDateTime goalDate
+        LocalDate goalDate
 ) {
 }

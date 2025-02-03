@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Goals</title>
+</head>
+<body>
+<h1>Lista celów</h1>
+<!--<ul>-->
+<!--    <li th:each="goal : ${goals}">-->
+<!--        <strong th:text="${goal.title}"></strong>:-->
+<!--        <span th:text="${goal.currentAmount} + ' / ' + ${goal.totalAmount}"></span>-->
+<!--        <span th:text="${goal.description}"></span>-->
+<!--        <span th:text="${goal.goalDate}"></span>-->
+<!--        <span th:text="${goal.id}"></span>-->
+<!--        <a th:href="@{/api/v0/details/{id}(id=${goal.id})}">Szczegóły</a>-->
+<!--&lt;!&ndash;        <form th:action="@{'/api/v0/goals/' + ${goal.id}}" method="post">&ndash;&gt;-->
+<!--        <form th:action="@{/api/v0/{id}(id=${goal.id})}" method="post">-->
+<!--            <input type="hidden" name="_method" value="delete"/>-->
+<!--            <button type="submit">Usuń</button>-->
+<!--        </form>-->
+
+<!--    </li>-->
+<!--</ul>-->
+
+<div th:if="${not #lists.isEmpty(goals)}">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tytuł</th>
+            <th>Suma końcowa</th>
+            <th>Suma obecna</th>
+            <th>Opis</th>
+            <th>Data</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="goal : ${goals}">
+            <td th:text="${goal.id}">Id</td>
+            <td th:text="${goal.title}">Tytuł</td>
+            <td th:text="${goal.totalAmount}">Suma końcowa</td>
+            <td th:text="${goal.currentAmount}">Suma obecna</td>
+            <td th:text="${goal.description}">Opis</td>
+            <td th:text="${goal.goalDate}">Data</td>
+            <td>
+                <a th:href="@{/api/v0/edit/{id}(id=${goal.id})}"
+                   class="btn btn-sm btn-info">Edytuj</a>
+            </td>
+            <td>
+                <form th:action="@{/api/v0/delete/{id}(id=${goal.id})}" method="post" onsubmit="return confirm('Czy na pewno chcesz usunąć tę osobę?');">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
+                </form>
+            </td>
+            <td>
+                <a th:href="@{/api/v0/details/{id}(id=${goal.id})}"
+                   class="btn btn-sm btn-info">Szczegóły</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Dodaj nowy cel</h2>
+<form th:action="@{/api/v0/goals}" method="post">
+    <label>Tytuł: <input type="text" name="title" required></label><br>
+    <label>Docelowa kwota: <input type="number" step="0.01" name="totalAmount" required></label><br>
+    <label>Obecna kwota: <input type="number" step="0.01" name="currentAmount" required></label><br>
+    <label>Opis: <input type="text" name="description"></label><br>
+    <label>Data celu: <input type="date" name="goalDate" required></label><br>
+    <button type="submit">Dodaj</button>
+</form>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

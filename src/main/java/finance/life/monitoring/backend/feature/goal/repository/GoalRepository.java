@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface GoalRepository extends JpaRepository<Goal, UUID> {
@@ -13,4 +14,6 @@ public interface GoalRepository extends JpaRepository<Goal, UUID> {
     @Modifying
     @Query("UPDATE Goal g SET g.currentAmount = g.currentAmount + :amount WHERE g.id = :uuid")
     int addAmountToGoal(UUID uuid, BigDecimal amount);
+
+    Optional<Goal> getGoalById(UUID uuid);
 }

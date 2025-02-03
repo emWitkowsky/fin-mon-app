@@ -14,6 +14,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -41,6 +42,6 @@ public class Goal {
     @NotBlank
     private String description;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime goalDate;
+//    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate goalDate;
 }

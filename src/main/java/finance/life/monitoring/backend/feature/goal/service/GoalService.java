@@ -20,4 +20,6 @@ public interface GoalService {
     void deleteGoal(UUID uuid);
 
     int updateGoalCurrentAmount(UUID uuid, BigDecimal amount);
+
+    ResponseEntity<Goal> updateGoal(UUID uuid, GoalCreateRequestDto goalCreateRequestDto);
 }
