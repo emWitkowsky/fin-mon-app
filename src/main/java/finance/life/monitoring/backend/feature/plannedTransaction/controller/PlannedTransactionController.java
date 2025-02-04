@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -42,9 +45,9 @@ public class PlannedTransactionController {
     public ResponseEntity<PlannedTransaction> createPlannedTransaction(
             @RequestParam String title,
             @RequestParam TransactionType type,
-            @RequestParam Float amount,
+            @RequestParam BigDecimal amount,
             @RequestParam String description,
-            @RequestParam LocalDateTime date
+            @RequestParam LocalDate date
             ) {
 
         PlannedTransactionCreateRequestDto plannedTransactionCreateRequestDto = new PlannedTransactionCreateRequestDto(
@@ -61,5 +64,21 @@ public class PlannedTransactionController {
     @DeleteMapping("/{id}")
     public void deletePlannedTransaction(@PathVariable("id") UUID uuid) {
         plannedTransactionService.deletePlannedTransaction(uuid);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PlannedTransaction> updatePlannedTransaction(
+            @PathVariable("id") UUID uuid,
+            @RequestParam String title,
+            @RequestParam TransactionType type,
+            @RequestParam BigDecimal amount,
+            @RequestParam String description,
+            @RequestParam LocalDate date
+            ) {
+        PlannedTransactionCreateRequestDto plannedTransactionCreateRequestDto = new PlannedTransactionCreateRequestDto(
+                title, type, amount, description, date
+        );
+
+        return plannedTransactionService.updatePlannedTransaction(uuid, plannedTransactionCreateRequestDto);
     }
 }

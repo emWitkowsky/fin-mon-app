@@ -1,8 +1,12 @@
 package finance.life.monitoring.backend.feature.plannedTransaction.service;
 
+import finance.life.monitoring.backend.core.handler.exception.BusinessException;
+import finance.life.monitoring.backend.core.handler.exception.BusinessExceptionReason;
+import finance.life.monitoring.backend.feature.goal.model.Goal;
 import finance.life.monitoring.backend.feature.plannedTransaction.dto.PlannedTransactionCreateRequestDto;
 import finance.life.monitoring.backend.feature.plannedTransaction.model.PlannedTransaction;
 import finance.life.monitoring.backend.feature.plannedTransaction.repository.PlannedTransactionRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,11 +37,13 @@ public class PlannedTransactionServiceDefault implements PlannedTransactionServi
     }
 
     @Override
+    @Transactional
     public void deletePlannedTransaction(UUID uuid) {
         plannedTransactionRepository.deleteById(uuid);
     }
 
     @Override
+    @Transactional
     public ResponseEntity<PlannedTransaction> createPlannedTransaction(PlannedTransactionCreateRequestDto plannedTransactionCreateRequestDto) {
         PlannedTransaction plannedTransaction;
         PlannedTransaction.PlannedTransactionBuilder plannedTransactionBuilder =
@@ -60,5 +66,27 @@ public class PlannedTransactionServiceDefault implements PlannedTransactionServi
 
         return ResponseEntity.created(location)
                 .body(savedPlannedTransaction);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<PlannedTransaction> updatePlannedTransaction(UUID uuid, PlannedTransactionCreateRequestDto plannedTransactionCreateRequestDto) {
+        PlannedTransaction plannedTransaction = getPlannedTransactionOrThrow(uuid);
+
+        plannedTransaction.setTitle(plannedTransactionCreateRequestDto.title());
+        plannedTransaction.setType(plannedTransactionCreateRequestDto.type());
+        plannedTransaction.setAmount(plannedTransactionCreateRequestDto.amount());
+        plannedTransaction.setDescription(plannedTransactionCreateRequestDto.description());
+        plannedTransaction.setDate(plannedTransactionCreateRequestDto.date());
+
+        PlannedTransaction savedPlannedTransaction = plannedTransactionRepository.saveAndFlush(plannedTransaction);
+
+        return ResponseEntity.ok(savedPlannedTransaction);
+    }
+
+    private PlannedTransaction getPlannedTransactionOrThrow(UUID uuid) {
+        Optional<PlannedTransaction> plannedTransactionOrNull = plannedTransactionRepository.findPlannedTransactionById(uuid);
+        return plannedTransactionOrNull.orElseThrow(
+                () -> new BusinessException(BusinessExceptionReason.PLANNED_TRANSACTION_NOT_FOUND));
     }
 }

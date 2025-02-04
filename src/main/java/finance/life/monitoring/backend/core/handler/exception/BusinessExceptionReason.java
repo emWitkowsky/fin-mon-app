@@ -11,7 +11,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public enum BusinessExceptionReason implements BusinessExceptionPolicy {
-    GOAL_NOT_FOUND("Could not find goal with id", HttpStatus.NOT_FOUND, null);
+    GOAL_NOT_FOUND("Could not find goal with id", HttpStatus.NOT_FOUND, null),
+    PLANNED_TRANSACTION_NOT_FOUND("Could not find planned transaction with id", HttpStatus.NOT_FOUND, null);
 
     private final String code = name();
     private final String message;

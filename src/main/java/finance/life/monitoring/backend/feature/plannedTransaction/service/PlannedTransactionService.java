@@ -17,4 +17,6 @@ public interface PlannedTransactionService {
     void deletePlannedTransaction(UUID uuid);
 
     ResponseEntity<PlannedTransaction> createPlannedTransaction(PlannedTransactionCreateRequestDto plannedTransactionCreateRequestDto);
+
+    ResponseEntity<PlannedTransaction> updatePlannedTransaction(UUID uuid, PlannedTransactionCreateRequestDto plannedTransactionCreateRequestDto);
 }

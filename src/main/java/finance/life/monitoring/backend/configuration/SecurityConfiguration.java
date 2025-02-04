@@ -86,7 +86,7 @@ public class SecurityConfiguration {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withJwkSetUri("http://keycloak:8080/realms/Mapzilla/protocol/openid-connect/certs").build();
+        return NimbusJwtDecoder.withJwkSetUri("http://keycloak:8080/realms/Finmon/protocol/openid-connect/certs").build();
     }
 
 

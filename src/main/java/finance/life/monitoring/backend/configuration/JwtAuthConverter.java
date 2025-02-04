@@ -56,10 +56,10 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
             return Set.of();
         }
         resourceAccess = jwt.getClaim("resource_access");
-        if (resourceAccess.get("mapzilla-rest-api") == null) {
+        if (resourceAccess.get("finmon-rest-api") == null) {
             return Set.of();
         }
-        resource = (Map<String, Object>) resourceAccess.get("mapzilla-rest-api");
+        resource = (Map<String, Object>) resourceAccess.get("finmon-rest-api");
         resourceRoles = (Collection<String>) resource.get("roles");
 
         return resourceRoles

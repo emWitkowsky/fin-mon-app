@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -34,13 +36,13 @@ public class PlannedTransaction {
     private TransactionType type;
 
 //    @NotBlank
-    private Float amount;
+    private BigDecimal amount;
 
     @Size(max = 200)
     @NotBlank
     private String description;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime date;
+    private LocalDate date;
 
 }
