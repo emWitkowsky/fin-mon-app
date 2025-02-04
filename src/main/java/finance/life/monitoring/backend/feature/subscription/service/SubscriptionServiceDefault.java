@@ -1,5 +1,9 @@
 package finance.life.monitoring.backend.feature.subscription.service;
 
+import finance.life.monitoring.backend.core.handler.exception.BusinessException;
+import finance.life.monitoring.backend.core.handler.exception.BusinessExceptionReason;
+import finance.life.monitoring.backend.feature.plannedTransaction.dto.PlannedTransactionCreateRequestDto;
+import finance.life.monitoring.backend.feature.plannedTransaction.model.PlannedTransaction;
 import finance.life.monitoring.backend.feature.subscription.dto.SubscriptionCreateRequestDto;
 import finance.life.monitoring.backend.feature.subscription.model.Subscription;
 import finance.life.monitoring.backend.feature.subscription.repository.SubscriptionRepository;
@@ -9,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -61,12 +66,33 @@ public class SubscriptionServiceDefault implements SubscriptionService {
     }
 
     @Override
-    public Optional<Float> getTotalOfSubscriptions() {
+    public Optional<BigDecimal> getTotalOfSubscriptions() {
         return subscriptionRepository.getTotalOfSubscriptions();
     }
 
     @Override
     public void deleteSubscription(UUID uuid) {
         subscriptionRepository.deleteById(uuid);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<Subscription> updateSubscription(UUID uuid, SubscriptionCreateRequestDto subscriptionCreateRequestDto) {
+        Subscription subscription = getSubscriptionOrThrow(uuid);
+
+        subscription.setName(subscriptionCreateRequestDto.name());
+        subscription.setAmount(subscriptionCreateRequestDto.amount());
+        subscription.setStartDate(subscriptionCreateRequestDto.startDate());
+        subscription.setEndDate(subscriptionCreateRequestDto.endDate());
+
+        Subscription savedSubscription = subscriptionRepository.saveAndFlush(subscription);
+
+        return ResponseEntity.ok(savedSubscription);
+    }
+
+    private Subscription getSubscriptionOrThrow(UUID uuid) {
+        Optional<Subscription> subscriptionOrNull = subscriptionRepository.getSubscriptionById(uuid);
+        return subscriptionOrNull.orElseThrow(
+                () -> new BusinessException(BusinessExceptionReason.SUBSCRIPTION_NOT_FOUND));
     }
 }

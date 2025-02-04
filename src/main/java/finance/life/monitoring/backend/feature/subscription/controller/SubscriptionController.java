@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -40,16 +43,16 @@ public class SubscriptionController {
     }
 
     @GetMapping("/subs/total")
-    public Optional<Float> getTotalAmountOfSubscriptions() {
+    public Optional<BigDecimal> getTotalAmountOfSubscriptions() {
         return subscriptionService.getTotalOfSubscriptions();
     }
 
     @PostMapping("/subs")
     public ResponseEntity<Subscription> createSubscription(
             @RequestParam String name,
-            @RequestParam Float amount,
-            @RequestParam LocalDateTime startDate,
-            @RequestParam LocalDateTime endDate
+            @RequestParam BigDecimal amount,
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate
             ) {
         SubscriptionCreateRequestDto subscriptionCreateRequestDto = new SubscriptionCreateRequestDto(
                 name,
@@ -64,5 +67,23 @@ public class SubscriptionController {
     @DeleteMapping("/{id}")
     public void deleteSubscription(@PathVariable("id") UUID uuid) {
         subscriptionService.deleteSubscription(uuid);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Subscription> updateSubscription(
+            @PathVariable("id") UUID uuid,
+            @RequestParam String name,
+            @RequestParam BigDecimal amount,
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate
+            ) {
+        SubscriptionCreateRequestDto subscriptionCreateRequestDto = new SubscriptionCreateRequestDto(
+                name,
+                amount,
+                startDate,
+                endDate
+        );
+
+        return subscriptionService.updateSubscription(uuid, subscriptionCreateRequestDto);
     }
 }

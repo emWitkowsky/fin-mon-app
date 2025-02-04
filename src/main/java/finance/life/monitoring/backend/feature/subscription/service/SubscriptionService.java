@@ -4,6 +4,7 @@ import finance.life.monitoring.backend.feature.subscription.dto.SubscriptionCrea
 import finance.life.monitoring.backend.feature.subscription.model.Subscription;
 import org.springframework.http.ResponseEntity;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,7 +17,9 @@ public interface SubscriptionService {
 
     ResponseEntity<Subscription> createSubscription(SubscriptionCreateRequestDto subscriptionCreateRequestDto);
 
-    Optional<Float> getTotalOfSubscriptions();
+    Optional<BigDecimal> getTotalOfSubscriptions();
 
     void deleteSubscription(UUID uuid);
+
+    ResponseEntity<Subscription> updateSubscription(UUID uuid, SubscriptionCreateRequestDto subscriptionCreateRequestDto);
 }

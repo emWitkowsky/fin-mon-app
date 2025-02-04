@@ -1,10 +1,12 @@
 package finance.life.monitoring.backend.feature.subscription.dto;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record SubscriptionCreateRequestDto (
   String name,
-  Float amount,
-  LocalDateTime startDate,
-  LocalDateTime endDate
+  BigDecimal amount,
+  LocalDate startDate,
+  LocalDate endDate
 ) {}

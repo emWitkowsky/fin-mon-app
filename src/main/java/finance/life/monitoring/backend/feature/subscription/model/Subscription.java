@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -33,11 +35,11 @@ public class Subscription {
     private String name;
 
     @NotBlank
-    private Float amount;
+    private BigDecimal amount;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 }
