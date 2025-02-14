@@ -3,6 +3,7 @@ package finance.life.monitoring.backend.feature.subscription.controller;
 import finance.life.monitoring.backend.feature.subscription.dto.SubscriptionCreateRequestDto;
 import finance.life.monitoring.backend.feature.subscription.model.Subscription;
 import finance.life.monitoring.backend.feature.subscription.service.SubscriptionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +24,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/subscription")
+@Slf4j
 public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
@@ -38,7 +40,7 @@ public class SubscriptionController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Subscription> getSubscription(@PathVariable("id") UUID id) {
+    public Subscription getSubscription(@PathVariable("id") UUID id) {
         return subscriptionService.getSubscription(id);
     }
 
@@ -61,6 +63,7 @@ public class SubscriptionController {
                 endDate
         );
 
+        log.info("Received subscription: {}", subscriptionCreateRequestDto);
         return subscriptionService.createSubscription(subscriptionCreateRequestDto);
     }
 
@@ -85,5 +88,15 @@ public class SubscriptionController {
         );
 
         return subscriptionService.updateSubscription(uuid, subscriptionCreateRequestDto);
+    }
+
+    @GetMapping("/sortedByEndDate")
+    List<Subscription> getAllSubscriptionsSortedByEndDate() {
+        return subscriptionService.getAllSubscriptionsSortedByEndDate();
+    }
+
+    @GetMapping("/sortedBy")
+    List<String> getAllSubscriptionsSortedBy() {
+        return subscriptionService.getAllSubscriptionsSortedBy();
     }
 }

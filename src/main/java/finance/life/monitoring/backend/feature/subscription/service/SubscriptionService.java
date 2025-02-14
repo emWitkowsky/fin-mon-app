@@ -13,7 +13,7 @@ public interface SubscriptionService {
 
     List<Subscription> getAllSubscriptions();
 
-    Optional<Subscription> getSubscription(UUID id);
+    Subscription getSubscription(UUID id);
 
     ResponseEntity<Subscription> createSubscription(SubscriptionCreateRequestDto subscriptionCreateRequestDto);
 
@@ -22,4 +22,8 @@ public interface SubscriptionService {
     void deleteSubscription(UUID uuid);
 
     ResponseEntity<Subscription> updateSubscription(UUID uuid, SubscriptionCreateRequestDto subscriptionCreateRequestDto);
+
+    List<Subscription> getAllSubscriptionsSortedByEndDate();
+
+    List<String> getAllSubscriptionsSortedBy();
 }

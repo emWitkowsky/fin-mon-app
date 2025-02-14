@@ -13,6 +13,7 @@ import java.util.List;
 public enum BusinessExceptionReason implements BusinessExceptionPolicy {
     GOAL_NOT_FOUND("Could not find goal with id", HttpStatus.NOT_FOUND, null),
     SUBSCRIPTION_NOT_FOUND("Could not find subscription with id", HttpStatus.NOT_FOUND, null),
+    EXPENSE_NOT_FOUND("Could not find goal with id", HttpStatus.NOT_FOUND, null),
     PLANNED_TRANSACTION_NOT_FOUND("Could not find planned transaction with id", HttpStatus.NOT_FOUND, null);
 
     private final String code = name();

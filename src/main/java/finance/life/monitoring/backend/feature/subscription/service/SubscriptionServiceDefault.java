@@ -15,9 +15,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class SubscriptionServiceDefault implements SubscriptionService {
@@ -35,8 +37,9 @@ public class SubscriptionServiceDefault implements SubscriptionService {
     }
 
     @Override
-    public Optional<Subscription> getSubscription(UUID id) {
-        return Optional.empty();
+    public Subscription getSubscription(UUID id) {
+        return getSubscriptionOrThrow(id);
+
     }
 
     @Override
@@ -88,6 +91,21 @@ public class SubscriptionServiceDefault implements SubscriptionService {
         Subscription savedSubscription = subscriptionRepository.saveAndFlush(subscription);
 
         return ResponseEntity.ok(savedSubscription);
+    }
+
+    @Override
+    public List<Subscription> getAllSubscriptionsSortedByEndDate() {
+        return subscriptionRepository.findAll().stream()
+                .sorted(Comparator.comparing(Subscription::getEndDate))
+                .toList();
+    }
+
+    @Override
+    public List<String> getAllSubscriptionsSortedBy() {
+        return subscriptionRepository.findAll().stream()
+                .sorted(Comparator.comparing(Subscription::getAmount))
+                .map(Subscription::getName)
+                .toList();
     }
 
     private Subscription getSubscriptionOrThrow(UUID uuid) {

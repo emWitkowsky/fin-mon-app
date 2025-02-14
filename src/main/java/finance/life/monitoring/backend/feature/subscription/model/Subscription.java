@@ -34,7 +34,7 @@ public class Subscription {
     @NotBlank
     private String name;
 
-    @NotBlank
+//    @NotBlank
     private BigDecimal amount;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")

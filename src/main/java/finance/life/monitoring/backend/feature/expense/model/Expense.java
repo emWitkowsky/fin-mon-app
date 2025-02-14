@@ -1,10 +1,18 @@
 package finance.life.monitoring.backend.feature.expense.model;
 
+import finance.life.monitoring.backend.feature.bank.dto.Bank;
+import finance.life.monitoring.backend.feature.expense.dto.BankDto;
+import finance.life.monitoring.backend.feature.expense.enums.ExpenseCategory;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -15,6 +23,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -42,15 +51,24 @@ public class Expense {
     @Column(updatable = false)
 //    @CreationTimestamp  Not sure we need that? but keep it just in case
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime transactionDate;
+    private LocalDate transactionDate;
 
     @Column(updatable = false)
 //    @CreationTimestamp  Not sure we need that? but keep it just in case
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime bookDate;
+    private LocalDate bookDate;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "TEXT")
+    private ExpenseCategory category;
 
+//    @ManyToOne
+//    @JoinColumn(name = "bank_id", referencedColumnName = "bank_id")
+//    private Bank bank;
+
+    @Embedded
+    private ExpenseDetails details;
 }

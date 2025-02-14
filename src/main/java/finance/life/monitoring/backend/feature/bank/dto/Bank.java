@@ -1,9 +1,14 @@
 package finance.life.monitoring.backend.feature.bank.dto;
 
+import finance.life.monitoring.backend.feature.expense.model.Expense;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,12 +25,17 @@ import java.util.UUID;
 @Builder
 @Setter
 @Getter
+@Table(name = "bank", schema = "public")
 public class Bank {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "bank_id", nullable = false)
     private UUID id;
 
     @NotBlank
     private String name;
+
+//    @OneToMany(targetEntity = Expense.class, mappedBy = "bank", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Expense> expense;
 }

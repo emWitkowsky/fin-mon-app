@@ -38,13 +38,13 @@ public class BankController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('client_admin')")
+//    @PreAuthorize("hasRole('client_admin')")
     void deleteBank(@PathVariable("id") UUID uuid) {
         bankService.deleteBank(uuid);
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('client_admin')")
+//    @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<Bank> createBank(
             @RequestParam String name
     ) {
