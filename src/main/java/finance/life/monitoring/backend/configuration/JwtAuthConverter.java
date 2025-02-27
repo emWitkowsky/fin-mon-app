@@ -1,5 +1,6 @@
 package finance.life.monitoring.backend.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -24,6 +25,9 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
             new JwtGrantedAuthoritiesConverter();
 
     private final String principleAttribute = "preferred_username";
+
+    @Value("${keycloak.realmName}")
+    private String keycloakRealmName;
 
     @Override
     public AbstractAuthenticationToken convert(@NonNull Jwt jwt) {
@@ -56,10 +60,10 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
             return Set.of();
         }
         resourceAccess = jwt.getClaim("resource_access");
-        if (resourceAccess.get("finmon-rest-api") == null) {
+        if (resourceAccess.get(keycloakRealmName) == null) {
             return Set.of();
         }
-        resource = (Map<String, Object>) resourceAccess.get("finmon-rest-api");
+        resource = (Map<String, Object>) resourceAccess.get(keycloakRealmName);
         resourceRoles = (Collection<String>) resource.get("roles");
 
         return resourceRoles

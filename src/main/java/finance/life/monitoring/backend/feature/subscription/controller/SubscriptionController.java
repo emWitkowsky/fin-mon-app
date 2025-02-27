@@ -34,7 +34,7 @@ public class SubscriptionController {
         this.subscriptionService = subscriptionService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<Subscription> getAllSubscriptions() {
       return subscriptionService.getAllSubscriptions();
     }
