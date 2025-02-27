@@ -2,12 +2,11 @@ package finance.life.monitoring.backend.feature.subscription.service;
 
 import finance.life.monitoring.backend.core.handler.exception.BusinessException;
 import finance.life.monitoring.backend.core.handler.exception.BusinessExceptionReason;
-import finance.life.monitoring.backend.feature.plannedTransaction.dto.PlannedTransactionCreateRequestDto;
-import finance.life.monitoring.backend.feature.plannedTransaction.model.PlannedTransaction;
 import finance.life.monitoring.backend.feature.subscription.dto.SubscriptionCreateRequestDto;
 import finance.life.monitoring.backend.feature.subscription.model.Subscription;
 import finance.life.monitoring.backend.feature.subscription.repository.SubscriptionRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,17 +18,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class SubscriptionServiceDefault implements SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
-
-    @Autowired
-    public SubscriptionServiceDefault(SubscriptionRepository subscriptionRepository) {
-        this.subscriptionRepository = subscriptionRepository;
-    }
 
     @Override
     public List<Subscription> getAllSubscriptions() {

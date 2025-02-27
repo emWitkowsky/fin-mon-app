@@ -4,6 +4,7 @@ package finance.life.monitoring.backend.feature.bank.service;
 import finance.life.monitoring.backend.feature.bank.dto.Bank;
 import finance.life.monitoring.backend.feature.bank.model.BankCreateRequestDto;
 import finance.life.monitoring.backend.feature.bank.repository.BankRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,13 +15,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class BankServiceDefault implements BankService {
 
     private final BankRepository bankRepository;
-
-    public BankServiceDefault(BankRepository bankRepository) {
-        this.bankRepository = bankRepository;
-    }
 
     @Override
     public List<Bank> getAllBanks() {

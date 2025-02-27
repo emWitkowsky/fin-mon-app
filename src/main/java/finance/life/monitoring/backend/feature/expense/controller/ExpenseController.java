@@ -7,6 +7,7 @@ import finance.life.monitoring.backend.feature.expense.model.Expense;
 import finance.life.monitoring.backend.feature.expense.service.ExpenseService;
 import finance.life.monitoring.backend.shared.dto.ResponseDto;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,15 +26,11 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/expenses")
 public class ExpenseController {
 
     private final ExpenseService expenseService;
-
-    @Autowired
-    public ExpenseController(ExpenseService expenseService) {
-        this.expenseService = expenseService;
-    }
 
     @GetMapping("/hello-world")
     public String helloWorld() {

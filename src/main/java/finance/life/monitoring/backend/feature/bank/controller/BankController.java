@@ -3,6 +3,7 @@ package finance.life.monitoring.backend.feature.bank.controller;
 import finance.life.monitoring.backend.feature.bank.dto.Bank;
 import finance.life.monitoring.backend.feature.bank.model.BankCreateRequestDto;
 import finance.life.monitoring.backend.feature.bank.service.BankServiceDefault;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,14 +19,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/bank")
 public class BankController {
 
     private final BankServiceDefault bankService;
-
-    public BankController(BankServiceDefault bankService) {
-        this.bankService = bankService;
-    }
 
     @GetMapping
     public List<Bank> getAllBanks() {

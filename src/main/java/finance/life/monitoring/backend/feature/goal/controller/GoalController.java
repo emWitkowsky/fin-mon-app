@@ -3,6 +3,7 @@ package finance.life.monitoring.backend.feature.goal.controller;
 import finance.life.monitoring.backend.feature.goal.dto.GoalCreateRequestDto;
 import finance.life.monitoring.backend.feature.goal.model.Goal;
 import finance.life.monitoring.backend.feature.goal.service.GoalService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +22,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/goal")
 public class GoalController {
 
     private final GoalService goalService;
 
-    public GoalController(GoalService goalService) {
-        this.goalService = goalService;
-    }
+//    public GoalController(GoalService goalService) {
+//        this.goalService = goalService;
+//    }
 
     @GetMapping
     public List<Goal> getAllGoals() {

@@ -4,6 +4,7 @@ import finance.life.monitoring.backend.feature.plannedTransaction.dto.PlannedTra
 import finance.life.monitoring.backend.feature.plannedTransaction.model.PlannedTransaction;
 import finance.life.monitoring.backend.feature.plannedTransaction.model.TransactionType;
 import finance.life.monitoring.backend.feature.plannedTransaction.service.PlannedTransactionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,14 +23,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/planned")
 public class PlannedTransactionController {
 
     private final PlannedTransactionService plannedTransactionService;
-
-    public PlannedTransactionController(PlannedTransactionService plannedTransactionService) {
-        this.plannedTransactionService = plannedTransactionService;
-    }
 
     @GetMapping
     public List<PlannedTransaction> getAllPlannedTransactions() {

@@ -3,6 +3,7 @@ package finance.life.monitoring.backend.feature.subscription.controller;
 import finance.life.monitoring.backend.feature.subscription.dto.SubscriptionCreateRequestDto;
 import finance.life.monitoring.backend.feature.subscription.model.Subscription;
 import finance.life.monitoring.backend.feature.subscription.service.SubscriptionService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +24,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/subscription")
 @Slf4j
 public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
-
-    @Autowired
-    public SubscriptionController(SubscriptionService subscriptionService) {
-        this.subscriptionService = subscriptionService;
-    }
 
     @GetMapping
     public List<Subscription> getAllSubscriptions() {

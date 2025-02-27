@@ -12,6 +12,7 @@ import finance.life.monitoring.backend.feature.expense.repository.ExpenseReposit
 import finance.life.monitoring.backend.shared.dto.ResponseDto;
 import finance.life.monitoring.backend.shared.enums.SuccessCode;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,15 +25,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class ExpenseServiceDefault implements ExpenseService {
 
+    //RequiredArgsConstructor will handle all with final
     private final ExpenseRepository expenseRepository;
     private final BankRepository bankRepository;
-
-    public ExpenseServiceDefault(ExpenseRepository expenseRepository, BankRepository bankRepository) {
-        this.expenseRepository = expenseRepository;
-        this.bankRepository = bankRepository;
-    }
 
     @Override
     @Transactional

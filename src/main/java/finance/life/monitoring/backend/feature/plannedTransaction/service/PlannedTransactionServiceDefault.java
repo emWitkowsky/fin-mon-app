@@ -2,12 +2,11 @@ package finance.life.monitoring.backend.feature.plannedTransaction.service;
 
 import finance.life.monitoring.backend.core.handler.exception.BusinessException;
 import finance.life.monitoring.backend.core.handler.exception.BusinessExceptionReason;
-import finance.life.monitoring.backend.feature.goal.model.Goal;
 import finance.life.monitoring.backend.feature.plannedTransaction.dto.PlannedTransactionCreateRequestDto;
 import finance.life.monitoring.backend.feature.plannedTransaction.model.PlannedTransaction;
 import finance.life.monitoring.backend.feature.plannedTransaction.repository.PlannedTransactionRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,14 +16,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class PlannedTransactionServiceDefault implements PlannedTransactionService {
 
     private final PlannedTransactionRepository plannedTransactionRepository;
-
-    public PlannedTransactionServiceDefault(PlannedTransactionRepository plannedTransactionRepository) {
-        this.plannedTransactionRepository = plannedTransactionRepository;
-    }
 
     @Override
     public List<PlannedTransaction> getAllPlannedTransactions() {
