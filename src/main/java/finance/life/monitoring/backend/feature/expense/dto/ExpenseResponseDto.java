@@ -6,8 +6,6 @@ import finance.life.monitoring.backend.feature.expense.model.ExpenseDetails;
 import jakarta.annotation.Nonnull;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 public record ExpenseResponseDto(

@@ -2,7 +2,6 @@ package finance.life.monitoring.backend.feature.expense.service;
 
 import finance.life.monitoring.backend.core.handler.exception.BusinessException;
 import finance.life.monitoring.backend.core.handler.exception.BusinessExceptionReason;
-import finance.life.monitoring.backend.feature.bank.dto.Bank;
 import finance.life.monitoring.backend.feature.bank.repository.BankRepository;
 import finance.life.monitoring.backend.feature.expense.dto.ExpenseCreateRequestDto;
 import finance.life.monitoring.backend.feature.expense.dto.ExpenseResponseDto;

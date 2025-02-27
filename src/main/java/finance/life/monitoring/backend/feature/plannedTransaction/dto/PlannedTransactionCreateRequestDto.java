@@ -4,7 +4,6 @@ import finance.life.monitoring.backend.feature.plannedTransaction.model.Transact
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public record PlannedTransactionCreateRequestDto(
 

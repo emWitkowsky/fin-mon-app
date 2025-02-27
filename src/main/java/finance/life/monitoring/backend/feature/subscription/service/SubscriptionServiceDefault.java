@@ -7,7 +7,6 @@ import finance.life.monitoring.backend.feature.subscription.model.Subscription;
 import finance.life.monitoring.backend.feature.subscription.repository.SubscriptionRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
